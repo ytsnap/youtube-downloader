@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="flex items-center space-x-2">
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        Snapyt
+                    </span>
+                </a>
+
+                <div class="relative">
+                    <button id="languageButton" class="flex items-center space-x-1 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span class="hidden sm:inline">Language</span>
+                    </button>
+                    <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                        <div class="py-1">
+                            <a href="#" data-lang="en" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English</a>
+                            <a href="#" data-lang="es" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Español</a>
+                            <a href="#" data-lang="zh" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">中文</a>
+                            <a href="#" data-lang="hi" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">हिंदी</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="min-h-screen flex flex-col items-center justify-start pt-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 opacity-10"></div>
+        
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-float">
+                YouTube Downloader
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+                Download YouTube Content Online
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 max-w-2xl mx-auto mb-8">
+                <div class="relative flex-1 w-full">
+                    <input
+                        type="text"
+                        id="urlInput"
+                        placeholder="Paste YouTube URL"
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <button
+                        id="pasteButton"
+                        class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        </svg>
+                    </button>
+                </div>
+                <button
+                    id="downloadButton"
+                    class="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download
+                </button>
+            </div>
+
+            <div class="flex justify-center gap-4 flex-wrap mb-8">
+                <a href="/video" class="px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors">Video</a>
+                <a href="/shorts" class="px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors">Shorts</a>
+                <a href="/thumbnail" class="px-4 py-2 border rounded-lg hover:bg-gray-50 transition-colors">Thumbnail</a>
+            </div>
+
+            <div id="previewContainer" class="hidden w-full max-w-2xl mx-auto mt-8 p-4 bg-white rounded-lg shadow-md">
+                <!-- Preview content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Copy YouTube URL</h3>
+                    <p class="text-gray-600">Copy the URL of any YouTube video or shorts you want to download</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Paste URL</h3>
+                    <p class="text-gray-600">Paste the URL into our search bar and select your preferred format</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Download</h3>
+                    <p class="text-gray-600">Click download and get your video in high quality (up to 1080p)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">
+                Frequently Asked Questions
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <div class="border rounded-lg">
+                        <button class="faq-button w-full text-left px-4 py-3 font-medium flex justify-between items-center">
+                            <span>How can I download YouTube videos on Snapyt?</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-3">
+                            Simply copy the YouTube video URL, paste it into our search bar, select your preferred quality, and click the download button. It's that easy!
+                        </div>
+                    </div>
+                    <div class="border rounded-lg">
+                        <button class="faq-button w-full text-left px-4 py-3 font-medium flex justify-between items-center">
+                            <span>Is Snapyt free to use?</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-3">
+                            Yes, Snapyt is completely free to use. You can download YouTube videos without any subscription or hidden fees.
+                        </div>
+                    </div>
+                    <div class="border rounded-lg">
+                        <button class="faq-button w-full text-left px-4 py-3 font-medium flex justify-between items-center">
+                            <span>What video qualities are available?</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="faq-content hidden px-4 pb-3">
+                            We support multiple video qualities including 1080p, 720p, and 360p in MP4 format to suit your needs.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                <p class="text-sm text-gray-600">
+                    © Snapyt 2024
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy" class="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
+                    <a href="/terms" class="text-sm text-gray-600 hover:text-gray-900">Terms of Service</a>
+                    <a href="/contact" class="text-sm text-gray-600 hover:text-gray-900">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
